@@ -1,0 +1,43 @@
+﻿@page
+@model ChatModel
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3>DeepSeek ChatBot</h3>
+                </div>
+                <div class="card-body chat-container" style="height: 400px; overflow-y: auto;">
+                    @foreach (var message in Model.Messages)
+                    {
+                        <div class="@(message.Role == "user" ? "text-end" : "text-start") mb-3">
+                            <div class="@(message.Role == "user" ? "bg-primary text-white" : "bg-light") p-3 rounded">
+                                <strong>@(message.Role == "user" ? "You" : "AI"):</strong>
+                                <p class="mb-0">@message.Content</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="card-footer">
+                    <form method="post">
+                        <div class="input-group">
+                            <input type="text" class="form-control" asp-for="UserMessage" placeholder="Type your message...">
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Auto-scroll to bottom of chat
+        document.addEventListener("DOMContentLoaded", function() {
+            var chatContainer = document.querySelector('.chat-container');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        });
+    </script>
+}
